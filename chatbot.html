@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatbot ผู้ช่วยเขียนรายงาน</title>
+    <!-- Tailwind CSS CDN เพื่อการออกแบบที่สวยงามและตอบสนองได้ดี -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- ใช้ฟอนต์ที่อ่านง่ายสำหรับภาษาไทย -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Sarabun', sans-serif;
+            background-color: #f0f2f5;
+        }
+        .chatbot-container {
+            max-height: 90vh;
+        }
+        #chat-window {
+            height: calc(100% - 140px);
+            max-height: 60vh;
+        }
+        .user-message {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 15px 15px 0 15px;
+            align-self: flex-end;
+            max-width: 80%;
+        }
+        .bot-message {
+            background-color: #e9e9eb;
+            color: #333;
+            padding: 10px 15px;
+            border-radius: 15px 15px 15px 0;
+            align-self: flex-start;
+            max-width: 80%;
+        }
+        .mode-btn.active {
+            background-color: #007bff;
+            color: white;
+            border-color: #007bff;
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center min-h-screen p-4">
+
+    <div class="chatbot-container bg-white p-6 rounded-3xl shadow-xl flex flex-col w-full max-w-xl">
+        <div class="text-center mb-6">
+            <h1 class="text-3xl font-bold text-gray-800">บอทผู้ช่วยเขียนรายงาน ✍️</h1>
+            <p class="text-gray-500 mt-2">พิมพ์หัวข้อรายงานที่คุณสนใจ แล้วเลือกโหมดที่ต้องการ</p>
+        </div>
+
+        <!-- หน้าต่างแชท -->
+        <div id="chat-window" class="flex-grow overflow-y-auto border border-gray-200 rounded-xl p-4 mb-4 flex flex-col space-y-3 shadow-inner">
+            <div class="bot-message">สวัสดีครับ! ผมคือบอทผู้ช่วยเขียนรายงานสำหรับนักเรียนนักศึกษา คุณอยากให้ผมช่วยเรื่องอะไรครับ?</div>
+        </div>
+
+        <!-- ตัวเลือกโหมด -->
+        <div class="flex justify-between items-center mb-4 space-x-2">
+            <button class="mode-btn flex-1 py-2 px-4 rounded-full border border-gray-300 bg-gray-50 text-gray-700 transition-all duration-300 hover:bg-gray-200 active" data-mode="academic">
+                🖊️ แบบวิชาการ
+            </button>
+            <button class="mode-btn flex-1 py-2 px-4 rounded-full border border-gray-300 bg-gray-50 text-gray-700 transition-all duration-300 hover:bg-gray-200" data-mode="summary">
+                📝 สรุปสั้น
+            </button>
+            <button class="mode-btn flex-1 py-2 px-4 rounded-full border border-gray-300 bg-gray-50 text-gray-700 transition-all duration-300 hover:bg-gray-200" data-mode="easy">
+                🗣️ อธิบายง่าย
+            </button>
+        </div>
+
+        <!-- ช่องพิมพ์ข้อความ -->
+        <div class="flex items-center space-x-2">
+            <input type="text" id="user-input" placeholder="พิมพ์หัวข้อรายงาน..." class="flex-grow p-3 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500">
+            <button id="send-btn" class="bg-blue-600 text-white rounded-full p-3 transition-colors duration-300 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+                </svg>
+            </button>
+        </div>
+
+    </div>
+
+    <script type="text/javascript">
+        // ⚠️สำคัญ: กรุณาใส่ Google AI Studio API Key ของคุณที่นี่
+        // ไปที่ https://aistudio.google.com/ เพื่อรับ API Key
+        const API_KEY = "YOUR_GOOGLE_AI_STUDIO_API_KEY"; 
+
+        const chatWindow = document.getElementById('chat-window');
+        const userInput = document.getElementById('user-input');
+        const sendBtn = document.getElementById('send-btn');
+        const modeButtons = document.querySelectorAll('.mode-btn');
+
+        let currentMode = 'academic';
+
+        // Event Listener สำหรับปุ่มโหมด
+        modeButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                modeButtons.forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+                currentMode = button.dataset.mode;
+                addBotMessage(`เปลี่ยนโหมดเป็น: <strong>${getModeText(currentMode)}</strong> แล้วครับ`);
+            });
+        });
+
+        // Event Listener สำหรับปุ่มส่งและ Enter
+        sendBtn.addEventListener('click', sendMessage);
+        userInput.addEventListener('keydown', (event) => {
+            if (event.key === 'Enter') {
+                sendMessage();
+            }
+        });
+
+        // ฟังก์ชันหลักในการส่งข้อความและเรียก API
+        async function sendMessage() {
+            const userText = userInput.value.trim();
+            if (userText === '') return;
+
+            // ตรวจสอบ API Key ก่อนส่งคำขอ
+            if (API_KEY === "AIzaSyAx3dkKI3Uz0z2OoK-x7QpTe9nvlPE2cRU") {
+                addBotMessage("⚠️ กรุณาใส่ API Key ของคุณในโค้ดก่อนใช้งาน");
+                return;
+            }
+
+            addUserMessage(userText);
+            userInput.value = '';
+
+            const prompt = createPrompt(userText, currentMode);
+            
+            addBotMessage('กำลังคิดคำตอบให้นะครับ... 🤔');
+
+            try {
+                const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${API_KEY}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        contents: [{ parts: [{ text: prompt }] }]
+                    }),
+                });
+                
+                const data = await response.json();
+                
+                // ตรวจสอบว่า response มีข้อมูลที่คาดหวังหรือไม่
+                if (data.candidates && data.candidates.length > 0 && data.candidates[0].content && data.candidates[0].content.parts && data.candidates[0].content.parts.length > 0) {
+                    const botResponse = data.candidates[0].content.parts[0].text;
+                    addBotMessage(botResponse);
+                } else {
+                    console.error("Unexpected API response structure:", data);
+                    addBotMessage("ขออภัยครับ เกิดข้อผิดพลาดในการประมวลผลคำตอบ");
+                }
+
+            } catch (error) {
+                console.error("Error calling Google AI API:", error);
+                addBotMessage('เกิดข้อผิดพลาดในการเชื่อมต่อ ลองใหม่อีกครั้งนะครับ');
+            }
+        }
+
+        // ฟังก์ชันสร้าง Prompt ให้กับ AI ตามโหมดที่เลือก
+        function createPrompt(topic, mode) {
+            let promptText = `คุณคือผู้ช่วยนักศึกษาไทยที่เชี่ยวชาญด้านการเขียนรายงานและวิจัย ตอบกลับด้วยภาษาไทยและสไตล์ที่เข้าใจง่ายสำหรับนักเรียนนักศึกษาไทยเท่านั้น\n\n`;
+
+            if (mode === 'academic') {
+                promptText += `โจทย์: หัวข้อคือ **${topic}** กรุณาสร้างโครงร่างรายงานที่สมบูรณ์แบบสำหรับนักศึกษาระดับมหาวิทยาลัย ประกอบด้วย:
+                1. บทนำ (ความเป็นมา, ความสำคัญ)
+                2. วัตถุประสงค์และขอบเขตการวิจัย
+                3. ทฤษฎีหรือแนวคิดที่เกี่ยวข้อง (แนะนำเนื้อหา)
+                4. แนวทางในการดำเนินงานหรือการรวบรวมข้อมูล
+                5. สรุปผลและข้อเสนอแนะ
+                6. แนะนำแหล่งอ้างอิงเบื้องต้นที่น่าเชื่อถือ (เป็นภาษาไทย/ภาษาอังกฤษ)
+                ทุกส่วนต้องมีรายละเอียดและใช้ภาษาเชิงวิชาการ`;
+            } else if (mode === 'summary') {
+                promptText += `โจทย์: หัวข้อคือ **${topic}** กรุณาสรุปเนื้อหาสำคัญของเรื่องนี้ให้สั้น กระชับ และได้ใจความที่สุด เหมาะสำหรับสรุปบทเรียน`;
+            } else if (mode === 'easy') {
+                promptText += `โจทย์: หัวข้อคือ **${topic}** กรุณาอธิบายเรื่องนี้ในภาษาที่เข้าใจง่ายที่สุด ใช้สำนวนที่เหมือนกำลังคุยกับเพื่อน`;
+            }
+            
+            return promptText;
+        }
+
+        // ฟังก์ชันเพิ่มข้อความผู้ใช้ลงในหน้าต่างแชท
+        function addUserMessage(text) {
+            const msgDiv = document.createElement('div');
+            msgDiv.className = 'user-message p-3 rounded-2xl mb-3 self-end shadow-md';
+            msgDiv.textContent = text;
+            chatWindow.appendChild(msgDiv);
+            chatWindow.scrollTop = chatWindow.scrollHeight;
+        }
+
+        // ฟังก์ชันเพิ่มข้อความบอทลงในหน้าต่างแชท
+        function addBotMessage(text) {
+            const loadingMsg = chatWindow.querySelector('.bot-message:last-child');
+            if (loadingMsg && loadingMsg.textContent.includes('กำลังคิดคำตอบ')) {
+                chatWindow.removeChild(loadingMsg);
+            }
+            const msgDiv = document.createElement('div');
+            msgDiv.className = 'bot-message p-3 rounded-2xl mb-3 self-start shadow-md';
+            // แปลง markdown (สำหรับตัวหนา)
+            msgDiv.innerHTML = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\n/g, '<br>');
+            chatWindow.appendChild(msgDiv);
+            chatWindow.scrollTop = chatWindow.scrollHeight;
+        }
+
+        // ฟังก์ชันช่วยแสดงชื่อโหมด
+        function getModeText(mode) {
+            switch(mode) {
+                case 'academic': return 'แบบวิชาการ';
+                case 'summary': return 'สรุปสั้น';
+                case 'easy': return 'อธิบายง่าย';
+                default: return '';
+            }
+        }
+    </script>
+</body>
+</html>
