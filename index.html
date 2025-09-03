@@ -6,7 +6,7 @@
     <title>Contact Profile - Graphics Design & Developer</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap');
         body {
             font-family: 'Inter', sans-serif;
             color: #e2e8f0;
@@ -14,39 +14,48 @@
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            padding: 20px;
+            padding: 16px;
             background: linear-gradient(
-                -45deg, 
-                #141824 0%,   /* Dark navy */
-                #232946 30%,  /* Blue-black */
-                #0f0f0f 70%,  /* Near black */
-                #232323 100%  /* Black-gray */
+                -45deg,
+                #141824 0%,
+                #232946 30%,
+                #0f0f0f 70%,
+                #232323 100%
             );
-            background-size: 400% 400%;
-            animation: gradientAnimation 20s ease infinite;
+            background-size: 300% 300%;
+            animation: gradientAnimation 15s ease infinite;
         }
-
         @keyframes gradientAnimation {
-            0% {background-position: 0% 50%;}
-            50% {background-position: 100% 50%;}
-            100% {background-position: 0% 50%;}
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
-
         .card-container {
             backdrop-filter: blur(24px);
-            background: rgba(25, 25, 34, 0.85);
-            border: 1px solid rgba(255,255,255,0.06);
-            box-shadow: 0 10px 32px 0 rgba(10,10,20,0.7);
-            transition: box-shadow 0.2s, transform 0.2s;
+            background: rgba(25, 25, 34, 0.9);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 12px 48px rgba(10, 10, 20, 0.8);
+            border-radius: 2rem;
+            transform: translateY(20px);
+            animation: fadeIn 1s ease-out forwards;
+            transition: all 0.3s ease;
         }
         .card-container:hover {
-            box-shadow: 0 16px 40px 0 rgba(30,30,60,0.9);
-            transform: scale(1.04) rotate(-1deg);
+            box-shadow: 0 20px 60px rgba(30, 30, 60, 1), 0 0 20px rgba(99, 102, 241, 0.5);
+            transform: translateY(0) scale(1.03) rotate(-0.5deg);
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
         .social-icon {
-            width: 24px;
-            height: 24px;
+            width: 28px;
+            height: 28px;
             fill: currentColor;
+            transition: transform 0.3s ease, color 0.3s ease;
+        }
+        .social-icon:hover {
+            transform: scale(1.2);
         }
         .spotify-animate {
             box-shadow: 0 0 24px 0 #1db954b0;
@@ -57,89 +66,102 @@
             50% { box-shadow: 0 0 24px 8px #1db954b0; }
             100% { box-shadow: 0 0 8px 0 #1db954b0; }
         }
+        .profile-img {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .profile-img:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(99, 102, 241, 0.5);
+        }
+        @media (max-width: 640px) {
+            .card-container {
+                padding: 1.5rem;
+                max-width: 90%;
+            }
+            h1 {
+                font-size: 1.75rem;
+            }
+            p {
+                font-size: 0.875rem;
+            }
+        }
     </style>
 </head>
 <body class="bg-gray-950 text-white">
-
-<div class="card-container p-8 rounded-3xl max-w-sm w-full transition-transform">
-    
+<div class="card-container p-8 max-w-md w-full">
     <!-- Profile Image -->
     <div class="relative w-32 h-32 mx-auto mb-6">
-        <img class="w-full h-full rounded-full object-cover border-4 border-indigo-500 shadow-lg" 
-            src="profile.jpg" 
+        <img class="w-full h-full rounded-full object-cover border-4 border-gradient-to-r from-indigo-500 to-purple-500 shadow-xl profile-img"
+            src="profile.jpg"
             alt="Profile Picture">
         <span class="absolute bottom-1 right-1 w-5 h-5 bg-green-500 rounded-full border-2 border-gray-900"></span>
     </div>
-
     <!-- Name and Role -->
     <div class="text-center">
-        <h1 class="text-3xl font-bold mb-1 text-white drop-shadow-[0_2px_6px_rgba(60,60,120,0.5)]">Sukonlawat Saetiao Dev</h1>
-        <p class="text-lg text-indigo-400 font-semibold mb-2">Graphics Design & Developer</p>
-        <p class="text-sm text-gray-400">
+        <h1 class="text-4xl font-extrabold mb-1 text-white drop-shadow-[0_2px_8px_rgba(60,60,120,0.6)]">Sukonlawat Saetiao Dev</h1>
+        <p class="text-xl text-indigo-400 font-semibold mb-2">Graphics Design & Developer</p>
+        <p class="text-sm text-gray-300 leading-relaxed">
             Passionate about creating stunning visuals and bringing them to life with C++ and Java.
         </p>
     </div>
-
     <!-- Skills -->
     <div class="mt-6">
-        <h2 class="text-base font-semibold text-gray-400 uppercase tracking-wider mb-2">Skills</h2>
-        <div class="flex flex-wrap gap-2">
-            <span class="bg-indigo-700 text-white text-xs font-medium px-2.5 py-1 rounded-full">C++</span>
-            <span class="bg-indigo-700 text-white text-xs font-medium px-2.5 py-1 rounded-full">Java</span>
-            <span class="bg-indigo-700 text-white text-xs font-medium px-2.5 py-1 rounded-full">Graphics Design</span>
-            <span class="bg-indigo-700 text-white text-xs font-medium px-2.5 py-1 rounded-full">Web Development</span>
+        <h2 class="text-base font-semibold text-gray-400 uppercase tracking-wider mb-3">Skills</h2>
+        <div class="flex flex-wrap gap-3">
+            <span class="bg-indigo-600 text-white text-xs font-medium px-3 py-1.5 rounded-full hover:bg-indigo-500 transition">C++</span>
+            <span class="bg-indigo-600 text-white text-xs font-medium px-3 py-1.5 rounded-full hover:bg-indigo-500 transition">Java</span>
+            <span class="bg-indigo-600 text-white text-xs font-medium px-3 py-1.5 rounded-full hover:bg-indigo-500 transition">Graphics Design</span>
+            <span class="bg-indigo-600 text-white text-xs font-medium px-3 py-1.5 rounded-full hover:bg-indigo-500 transition">Web Development</span>
         </div>
     </div>
-
     <!-- Social Media -->
     <div class="mt-6">
-        <h2 class="text-base font-semibold text-gray-400 uppercase tracking-wider mb-2">Connect</h2>
+        <h2 class="text-base font-semibold text-gray-400 uppercase tracking-wider mb-3">Connect</h2>
         <div class="flex justify-around items-center">
             <!-- GitHub Icon -->
-            <a href="https://github.com/SukonDev" target="_blank" class="flex items-center justify-center p-3 rounded-full bg-gray-800 hover:bg-gray-700 transition-colors duration-200 text-gray-300">
+            <a href="https://github.com/SukonDev" target="_blank" class="flex items-center justify-center p-3 rounded-full bg-gray-800 hover:bg-gray-900 transition-colors duration-200 text-gray-300" aria-label="GitHub Profile">
                 <svg class="social-icon" viewBox="0 0 24 24">
                     <path d="M12 .297c-6.6 0-12 5.4-12 12 0 5.3 3.438 9.8 8.207 11.387.6.11.793-.26.793-.577v-2.234c-3.338.724-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.09-.745.082-1.026.082-1.026 1.205.084 1.84 1.24 1.84 1.24 1.07 1.835 2.807 1.305 3.492.997.108-.775.418-1.305.76-1.606-2.665-.303-5.467-1.332-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.123-.303-.535-1.523.117-3.176 0 0 1.008-.322 3.3 1.23a11.51 11.51 0 0 1 3.004-.404c1.018.005 2.044.138 3.003.404 2.291-1.553 3.297-1.23 3.297-1.23.653 1.653.241 2.873.118 3.176.77.84 1.235 1.91 1.235 3.221 0 4.609-2.807 5.625-5.479 5.921.43.371.823 1.102.823 2.222v3.293c0 .32.192.694.801.576C20.565 22.092 24 17.592 24 12.297c0-6.6-5.4-12-12-12"/>
                 </svg>
             </a>
             <!-- Facebook Icon -->
-            <a href="https://www.facebook.com/share/1Ay27dQ2JF/" target="_blank" class="flex items-center justify-center p-3 rounded-full bg-gray-800 hover:bg-gray-700 transition-colors duration-200 text-gray-300">
+            <a href="https://www.facebook.com/share/1Ay27dQ2JF/" target="_blank" class="flex items-center justify-center p-3 rounded-full bg-gray-800 hover:bg-blue-600 transition-colors duration-200 text-gray-300" aria-label="Facebook Profile">
                 <svg class="social-icon" viewBox="0 0 24 24">
                     <path d="M22.675 0h-21.35C.6 0 0 .6 0 1.326v21.348C0 23.4.6 24 1.326 24H12.82V14.708h-3.128v-3.625h3.128V8.413c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.797.143v3.243h-1.925c-1.508 0-1.803.717-1.803 1.767v2.317h3.605l-.469 3.625h-3.136V24h6.155c.727 0 1.326-.6 1.326-1.326V1.326C24 .6 23.4 0 22.675 0"/>
                 </svg>
             </a>
-            <!-- Instagram Icon -->
-            <a href="https://www.instagram.com/sukonlxwat?igsh=MXVkeWJ2aWN6MTBpMA==" target="_blank" class="flex items-center justify-center p-3 rounded-full bg-gray-800 hover:bg-gray-700 transition-colors duration-200 text-gray-300">
+            <!-- Instagram Icon (Fixed) -->
+            <a href="https://www.instagram.com/sukonlxwat?igsh=MXVkeWJ2aWN6MTBpMA==" target="_blank" class="flex items-center justify-center p-3 rounded-full bg-gray-800 hover:bg-gradient-to-r hover:from-pink-500 hover:to-purple-500 transition-colors duration-200 text-gray-300" aria-label="Instagram Profile">
                 <svg class="social-icon" viewBox="0 0 24 24">
-                    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 1.206.056 1.977.24 2.438.403a4.602 4.602 0 0 1 1.675 1.093 4.602 4.602 0 0 1 1.093 1.675c.163.461.347 1.232.403 2.438.058 1.266.07 1.64.07 4.85s-.012 3.584-.07 4.85c-.056 1.206-.24 1.977-.403 2.438a4.602 4.602 0 0 1-1.093 1.675 4.602 4.602 0 0 1-1.675 1.093c-.461.163-1.232.347-2.438.403-1.266.058-1.64.07-4.85.07s-3.584-.012-4.85-.07c-1.206-.056-1.977-.24-2.438-.403a4.602 4.602 0 0 1-1.675-1.093 4.602 4.602 0 0 1-1.093-1.675c-.163-.461-.347-1.232-.403-2.438-.058-1.266-.07-1.64-.07-4.85s.012-3.584.07-4.85c.056-1.206.24-1.977.403-2.438a4.602 4.602 0 0 1 1.093-1.675 4.602 4.602 0 0 1 1.675-1.093c.461-.163 1.232-.347 2.438-.403 1.266-.058 1.64-.07 4.85-.07zm0-2.163C8.741 0 8.332.014 7.052.072 5.78.13 4.763.275 3.965.468c-.796.191-1.528.463-2.258.893a6.518 6.518 0 0 0-2.338 2.338c-.43.73-.702 1.462-.893 2.258-.193.798-.338 1.815-.396 3.087C.014 8.332 0 8.741 0 12c0 3.259.014 3.668.072 4.948.058 1.272.203 2.289.396 3.087.191.796.463 1.528.893 2.258a6.518 6.518 0 0 0 2.338 2.338c.73.43 1.462.702 2.258.893.798.193 1.815.338 3.087.396C8.332 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 1.272-.058 2.289-.203 3.087-.396.796-.191 1.528-.463 2.258-.893a6.518 6.518 0 0 0 2.338-2.338c.43-.73.702-1.462.893-2.258.193-.798.338-1.815.396-3.087.058-1.28.072-1.689.072-4.948s-.014-3.668-.072-4.948c-.058-1.272-.203-2.289-.396-3.087-.191-.796-.463-1.528-.893-2.258a6.518 6.518 0 0 0-2.338-2.338c-.73-.43-1.462-.702-2.258-.893-.798-.193-1.815-.338-3.087-.396C15.668.014 15.259 0 12 0z"/>
-                    <circle cx="12" cy="12" r="3.5"/>
+                    <path d="M12 0C8.74 0 8.33.01 7.05.07 5.78.13 4.76.28 3.96.47c-.8.19-1.53.46-2.24.89-.73.43-1.4 1.01-1.83 1.74S.46 4.67.27 5.47C.08 6.27.02 7.29.01 8.56.01 9.83 0 10.24 0 12s.01 2.17.07 3.44c.06 1.27.21 2.29.4 3.09.19.8.46 1.53.89 2.24.43.73 1.01 1.4 1.74 1.83.73.43 1.46.69 2.26.88.8.19 1.82.34 3.09.4 1.27.06 1.68.07 3.44.07s2.17-.01 3.44-.07c1.27-.06 2.29-.21 3.09-.4.8-.19 1.53-.46 2.24-.89.73-.43 1.4-1.01 1.83-1.74.43-.73.69-1.46.88-2.26.19-.8.34-1.82.4-3.09.06-1.27.07-1.68.07-3.44s-.01-2.17-.07-3.44c-.06-1.27-.21-2.29-.4-3.09-.19-.8-.46-1.53-.89-2.24-.43-.73-1.01-1.4-1.74-1.83-.73-.43-1.46-.69-2.26-.88-.8-.19-1.82-.34-3.09-.4C14.17.01 13.76 0 12 0zm0 5.8c3.38 0 6.13 2.75 6.13 6.13s-2.75 6.13-6.13 6.13-6.13-2.75-6.13-6.13S8.62 5.8 12 5.8zm0 10.15c2.22 0 4.02-1.8 4.02-4.02s-1.8-4.02-4.02-4.02-4.02 1.8-4.02 4.02 1.8 4.02 4.02 4.02zm6.53-10.33c-.79 0-1.43.64-1.43 1.43s.64 1.43 1.43 1.43 1.43-.64 1.43-1.43-.64-1.43-1.43-1.43z"/>
                 </svg>
             </a>
         </div>
     </div>
-
-    <!-- เพลงที่ชอบ -->
+    <!-- Favorite Song -->
     <div class="mt-8 text-center">
         <h2 class="text-base font-semibold text-green-400 uppercase tracking-wider mb-3">Favorite Song</h2>
-        <div class="flex flex-col items-center gap-3">
+        <div class="flex flex-col items-center gap-4">
             <div class="spotify-animate p-1 rounded-2xl bg-[#181818]">
                 <iframe style="border-radius:12px"
                     src="https://open.spotify.com/embed/track/2UzdM3S5SrnjLCwQsleGrM?si=wF6z_h1XTKu_6MZJHwqDvQ"
-                    width="100%" 
-                    height="80" 
-                    frameBorder="0" 
+                    width="100%"
+                    height="80"
+                    frameBorder="0"
                     allow="autoplay; clipboard-write; encrypted-media; picture-in-picture"
-                    loading="lazy"></iframe>
+                    loading="lazy"
+                    title="Spotify Favorite Song"></iframe>
             </div>
             <a href="https://open.spotify.com/track/2UzdM3S5SrnjLCwQsleGrM?si=wF6z_h1XTKu_6MZJHwqDvQ"
                 target="_blank"
-                class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-green-600 hover:bg-green-700 text-white font-semibold shadow-lg transition cursor-pointer animate-bounce"
-                style="animation-duration:1.5s;">
-                <svg class="w-5 h-5" fill="#fff" viewBox="0 0 496 512"><path d="M248 8C111 8 0 119 0 256s111 248 248 248 248-111 248-248S385 8 248 8zm121.6 363.2c-5.2 8.4-16.4 11-24.8 5.6-68-41.6-153.6-51.2-254.4-28.8-9.6 2-19.2-4-21.2-13.6-2-9.6 4-19.2 13.6-21.2 108.8-24.4 203.2-13.2 279.6 34.4 8.4 5.2 11 16.4 5.6 24.8zm31.2-56c-6.8 11.2-21.6 14.8-32.8 8.4-77.6-47.2-195.6-61.2-287.2-34.4-12.4 3.6-25.6-3.2-29.2-15.6s3.2-25.6 15.6-29.2c102.4-30.4 232.8-15.2 320.8 39.2 11.2 6.8 14.8 21.6 8.4 32.8zm32-64c-8.8 14.4-27.2 19.2-41.6 10-88-53.6-230.8-58.4-316-32.8-16.4 5.2-33.6-4-38.8-20.4-5.2-16.4 4-33.6 20.4-38.8 96.4-30.4 251.2-25.2 349.6 36 14.4 8.8 19.2 27.2 10 41.6z"/></svg>
+                class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-green-600 hover:bg-green-500 text-white font-semibold shadow-lg transition transform hover:scale-105">
+                <svg class="w-5 h-5" fill="#fff" viewBox="0 0 496 512">
+                    <path d="M248 8C111 8 0 119 0 256s111 248 248 248 248-111 248-248S385 8 248 8zm121.6 363.2c-5.2 8.4-16.4 11-24.8 5.6-68-41.6-153.6-51.2-254.4-28.8-9.6 2-19.2-4-21.2-13.6-2-9.6 4-19.2 13.6-21.2 108.8-24.4 203.2-13.2 279.6 34.4 8.4 5.2 11 16.4 5.6 24.8zm31.2-56c-6.8 11.2-21.6 14.8-32.8 8.4-77.6-47.2-195.6-61.2-287.2-34.4-12.4 3.6-25.6-3.2-29.2-15.6s3.2-25.6 15.6-29.2c102.4-30.4 232.8-15.2 320.8 39.2 11.2 6.8 14.8 21.6 8.4 32.8zm32-64c-8.8 14.4-27.2 19.2-41.6 10-88-53.6-230.8-58.4-316-32.8-16.4 5.2-33.6-4-38.8-20.4-5.2-16.4 4-33.6 20.4-38.8 96.4-30.4 251.2-25.2 349.6 36 14.4 8.8 19.2 27.2 10 41.6z"/>
+                </svg>
                 Listen on Spotify
             </a>
         </div>
     </div>
 </div>
-
 </body>
 </html>
