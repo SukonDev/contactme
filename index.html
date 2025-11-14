@@ -1,225 +1,262 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="th">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact Profile - Graphics Design & Developer</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap');
-        body {
-            font-family: 'Inter', sans-serif;
-            color: #e2e8f0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            padding: 16px;
-            background: #0f0f0f;
-            overflow: hidden;
-        }
-        .card-container {
-            backdrop-filter: blur(24px);
-            background: rgba(25, 25, 34, 0.9);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 12px 48px rgba(10, 10, 20, 0.8);
-            border-radius: 2rem;
-            transform: translateY(20px);
-            animation: fadeIn 1s ease-out forwards;
-            transition: all 0.3s ease;
-            max-width: 90%;
-            width: 100%;
-            max-width: 1200px;
-            z-index: 10;
-        }
-        .card-container:hover {
-            box-shadow: 0 20px 60px rgba(30, 30, 60, 1), 0 0 20px rgba(99, 102, 241, 0.5);
-            transform: translateY(0) scale(1.03);
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .social-icon {
-            width: 28px;
-            height: 28px;
-            fill: currentColor;
-            transition: transform 0.3s ease, color 0.3s ease;
-        }
-        .social-icon:hover {
-            transform: scale(1.2);
-        }
-        .spotify-animate {
-            box-shadow: 0 0 24px 0 #1db954b0;
-            animation: pulseSpotify 2s infinite;
-        }
-        @keyframes pulseSpotify {
-            0% { box-shadow: 0 0 8px 0 #1db954b0; }
-            50% { box-shadow: 0 0 24px 8px #1db954b0; }
-            100% { box-shadow: 0 0 8px 0 #1db954b0; }
-        }
-        .profile-img {
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        .profile-img:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 20px rgba(99, 102, 241, 0.5);
-        }
-        /* Code Background Animation */
-        .code-background {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-            pointer-events: none;
-            z-index: 1;
-        }
-        .code-snippet {
-            position: absolute;
-            font-family: 'Courier New', monospace;
-            font-size: 1rem;
-            color: rgba(255, 255, 255, 0.2);
-            white-space: nowrap;
-            animation: floatCode 20s linear infinite;
-            user-select: none;
-        }
-        @keyframes floatCode {
-            0% { transform: translateY(100vh) translateX(0); }
-            100% { transform: translateY(-100vh) translateX(calc(50vw - 50%)); }
-        }
-        .portfolio-preview {
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        .portfolio-preview:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 20px rgba(99, 102, 241, 0.5);
-        }
-        @media (max-width: 640px) {
-            .card-container {
-                padding: 1.5rem;
-            }
-            h1 {
-                font-size: 1.75rem;
-            }
-            p {
-                font-size: 0.875rem;
-            }
-            .portfolio-grid {
-                grid-template-columns: 1fr;
-            }
-            .code-snippet {
-                font-size: 0.75rem;
-            }
-        }
-        @media (min-width: 641px) {
-            .portfolio-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-    </style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>SukonDev — Skills & Contact</title>
+
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg-dark: #070607;
+      --panel: rgba(18,18,18,0.7);
+      --glass: rgba(255,255,255,0.03);
+      --accent-1: #ff2d2d; /* vivid red */
+      --accent-2: #b10f0f;
+      --muted: #cbd5e1;
+      --card-radius: 18px;
+    }
+
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: Inter, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      background: radial-gradient(800px 400px at 10% 10%, rgba(177,15,15,0.06), transparent),
+                  linear-gradient(180deg, var(--bg-dark) 0%, #0f0f10 100%);
+      color:var(--muted);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:20px;
+      -webkit-font-smoothing:antialiased;
+    }
+
+    .safe {
+      width:100%;
+      max-width:860px;
+      padding:20px;
+    }
+
+    /* iOS-like large title */
+    .large-title {
+      display:flex;
+      gap:16px;
+      align-items:center;
+      margin-bottom:14px;
+    }
+    .avatar {
+      width:88px;
+      height:88px;
+      border-radius:22px;
+      overflow:hidden;
+      flex:0 0 88px;
+      background: linear-gradient(135deg,var(--accent-1),var(--accent-2));
+      border: 3px solid rgba(255,255,255,0.04);
+      box-shadow: 0 10px 30px rgba(177,15,15,0.12);
+    }
+    .avatar img{ width:100%; height:100%; object-fit:cover; display:block; }
+
+    .name h1{
+      font-size:26px;
+      margin:0;
+      color:#fff;
+      font-weight:800;
+      letter-spacing:-0.3px;
+      text-shadow: 0 8px 24px rgba(0,0,0,0.6);
+    }
+    .name p.role{
+      margin:4px 0 0 0;
+      color:#f1f5f9;
+      font-weight:600;
+      opacity:0.9;
+      font-size:13px;
+    }
+    .subtitle {
+      margin-top:8px;
+      color:#e2e8f0;
+      opacity:0.85;
+      font-size:13px;
+    }
+
+    /* Card (glass) */
+    .card {
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border: 1px solid rgba(255,255,255,0.04);
+      backdrop-filter: blur(8px) saturate(120%);
+      border-radius: var(--card-radius);
+      padding:18px;
+      box-shadow: 0 18px 50px rgba(3,6,12,0.6);
+    }
+
+    .section-title { color: #ffdfe0; font-weight:700; margin-top:8px; margin-bottom:8px; font-size:13px; }
+
+    .chips { display:flex; flex-wrap:wrap; gap:10px; margin-top:6px; }
+    .chip {
+      background: linear-gradient(180deg, rgba(255,45,45,0.08), rgba(177,15,15,0.04));
+      color: #fff;
+      padding:8px 12px;
+      border-radius:999px;
+      font-weight:700;
+      font-size:13px;
+      border:1px solid rgba(255,45,45,0.08);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.45);
+    }
+
+    /* Contact buttons (iOS style) */
+    .contacts {
+      display:flex;
+      gap:12px;
+      margin-top:12px;
+      flex-wrap:wrap;
+      align-items:center;
+    }
+    .contact-btn {
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding:10px 14px;
+      border-radius:12px;
+      background: linear-gradient(90deg, rgba(255,45,45,0.95), rgba(177,15,15,0.95));
+      color:white;
+      font-weight:700;
+      text-decoration:none;
+      border:none;
+      cursor:pointer;
+      box-shadow: 0 10px 30px rgba(177,15,15,0.14);
+      transition: transform .14s ease, box-shadow .14s ease;
+    }
+    .contact-btn.ghost {
+      background:transparent;
+      color:var(--muted);
+      border:1px solid rgba(255,255,255,0.04);
+      box-shadow:none;
+    }
+    .contact-btn:hover { transform: translateY(-4px); }
+
+    .contact-icon {
+      width:18px; height:18px; display:inline-block; flex:0 0 18px;
+    }
+
+    .note { color: #f8fafc; opacity:0.8; margin-top:12px; font-size:13px; }
+
+    /* bottom-tab style hint (not interactive) */
+    .tab-hint {
+      margin-top:16px;
+      display:flex;
+      gap:8px;
+      align-items:center;
+      justify-content:center;
+      opacity:0.7;
+    }
+    .tab-dot { width:40px; height:6px; border-radius:999px; background:linear-gradient(90deg,var(--accent-1),var(--accent-2)); box-shadow:0 6px 18px rgba(177,15,15,0.12); }
+
+    @media (max-width:640px){
+      .large-title { gap:12px; }
+      .avatar { width:72px; height:72px; flex:0 0 72px; border-radius:16px; }
+      .name h1 { font-size:20px; }
+      .card { padding:14px; border-radius:14px; }
+    }
+  </style>
 </head>
-<body class="bg-gray-950 text-white relative">
-    <!-- Code Background Animation -->
-    <div class="code-background">
-        <!-- JavaScript will dynamically add code snippets -->
+<body>
+  <div class="safe">
+    <div class="large-title" role="banner">
+      <div class="avatar" aria-hidden="true">
+        <img src="profile.png" alt="Sukonlawat Saetiao Dev">
+      </div>
+      <div class="name">
+        <h1>Sukonlawat Saetiao</h1>
+        <p class="role">Graphics Design & Developer</p>
+        <div class="subtitle">สวัสดีครับผมชื่อ มด เป็น Developer และ Graphics design สนใจในการพัฒนาระบบ Management</div>
+      </div>
     </div>
 
-    <div class="card-container p-6 md:p-8">
-        <!-- Profile Image -->
-        <div class="relative w-32 h-32 mx-auto mb-6">
-            <img class="w-full h-full rounded-full object-cover border-4 border-gradient-to-r from-indigo-500 to-purple-500 shadow-xl profile-img"
-                src="IMG_20250927_173752_490.webp"
-                alt="Profile Picture">
-            <span class="absolute bottom-1 right-1 w-5 h-5 bg-green-500 rounded-full border-2 border-gray-900"></span>
-        </div>
-        <!-- Name and Role -->
-        <div class="text-center">
-            <h1 class="text-3xl md:text-4xl font-extrabold mb-1 text-white drop-shadow-[0_2px_8px_rgba(60,60,120,0.6)]">Sukonlawat Saetiao Dev</h1>
-            <p class="text-lg md:text-xl text-indigo-400 font-semibold mb-2">Graphics Design & Developer</p>
-            <p class="text-sm md:text-base text-gray-300 leading-relaxed">
-                Passionate about creating stunning visuals and bringing them to life with C++ and Java.
-            </p>
-        </div>
-        <!-- Skills -->
-        <div class="mt-6">
-            <h2 class="text-base font-semibold text-gray-400 uppercase tracking-wider mb-3">Skills</h2>
-            <div class="flex flex-wrap gap-3 justify-center">
-                <span class="bg-indigo-600 text-white text-xs font-medium px-3 py-1.5 rounded-full hover:bg-indigo-500 transition">C++</span>
-                <span class="bg-indigo-600 text-white text-xs font-medium px-3 py-1.5 rounded-full hover:bg-indigo-500 transition">Java</span>
-                <span class="bg-indigo-600 text-white text-xs font-medium px-3 py-1.5 rounded-full hover:bg-indigo-500 transition">Graphics Design</span>
-                <span class="bg-indigo-600 text-white text-xs font-medium px-3 py-1.5 rounded-full hover:bg-indigo-500 transition">Web Development</span>
-                <span class="bg-indigo-600 text-white text-xs font-medium px-3 py-1.5 rounded-full hover:bg-indigo-500 transition">HTML</span>
-                <span class="bg-indigo-600 text-white text-xs font-medium px-3 py-1.5 rounded-full hover:bg-indigo-500 transition">CSS</span>
-                <span class="bg-indigo-600 text-white text-xs font-medium px-3 py-1.5 rounded-full hover:bg-indigo-500 transition">JavaScript</span>
-            </div>
-        </div>
-        <!-- Portfolio Previews -->
-        
-        <!-- Social Media -->
-        <div class="mt-8">
-            <h2 class="text-base font-semibold text-gray-400 uppercase tracking-wider mb-3 text-center">Connect</h2>
-            <div class="flex justify-center gap-6 md:gap-8">
-                <!-- GitHub Icon -->
-                <a href="https://github.com/SukonDev" target="_blank" class="flex items-center justify-center p-3 rounded-full bg-gray-800 hover:bg-gray-900 transition-colors duration-200 text-gray-300" aria-label="GitHub Profile">
-                    <svg class="social-icon" viewBox="0 0 24 24">
-                        <path d="M12 .297c-6.6 0-12 5.4-12 12 0 5.3 3.438 9.8 8.207 11.387.6.11.793-.26.793-.577v-2.234c-3.338.724-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.09-.745.082-1.026.082-1.026 1.205.084 1.84 1.24 1.84 1.24 1.07 1.835 2.807 1.305 3.492.997.108-.775.418-1.305.76-1.606-2.665-.303-5.467-1.332-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.123-.303-.535-1.523.117-3.176 0 0 1.008-.322 3.3 1.23a11.51 11.51 0 0 1 3.004-.404c1.018.005 2.044.138 3.003.404 2.291-1.553 3.297-1.23 3.297-1.23.653 1.653.241 2.873.118 3.176.77.84 1.235 1.91 1.235 3.221 0 4.609-2.807 5.625-5.479 5.921.43.371.823 1.102.823 2.222v3.293c0 .32.192.694.801.576C20.565 22.092 24 17.592 24 12.297c0-6.6-5.4-12-12-12"/>
-                    </svg>
-                </a>
-                <!-- Facebook Icon -->
-                <a href="https://www.facebook.com/share/1Ay27dQ2JF/" target="_blank" class="flex items-center justify-center p-3 rounded-full bg-gray-800 hover:bg-blue-600 transition-colors duration-200 text-gray-300" aria-label="Facebook Profile">
-                    <svg class="social-icon" viewBox="0 0 24 24">
-                        <path d="M22.675 0h-21.35C.6 0 0 .6 0 1.326v21.348C0 23.4.6 24 1.326 24H12.82V14.708h-3.128v-3.625h3.128V8.413c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.797.143v3.243h-1.925c-1.508 0-1.803.717-1.803 1.767v2.317h3.605l-.469 3.625h-3.136V24h6.155c.727 0 1.326-.6 1.326-1.326V1.326C24 .6 23.4 0 22.675 0"/>
-                    </svg>
-                </a>
-                <!-- Instagram Icon -->
-                <a href="https://www.instagram.com/sukonlxwat?igsh=MXVkeWJ2aWN6MTBpMA==" target="_blank" class="flex items-center justify-center p-3 rounded-full bg-gray-800 hover:bg-gradient-to-r hover:from-pink-500 hover:to-purple-500 transition-colors duration-200 text-gray-300" aria-label="Instagram Profile">
-                    <svg class="social-icon" viewBox="0 0 24 24">
-                        <path d="M12 0C8.74 0 8.33.01 7.05.07 5.78.13 4.76.28 3.96.47c-.8.19-1.53.46-2.24.89-.73.43-1.4 1.01-1.83 1.74S.46 4.67.27 5.47C.08 6.27.02 7.29.01 8.56.01 9.83 0 10.24 0 12s.01 2.17.07 3.44c.06 1.27.21 2.29.4 3.09.19.8.46 1.53.89 2.24.43.73 1.01 1.4 1.74 1.83.73.43 1.46.69 2.26.88.8.19 1.82.34 3.09.4 1.27.06 1.68.07 3.44.07s2.17-.01 3.44-.07c1.27-.06 2.29-.21 3.09-.4.8-.19 1.53-.46 2.24-.89.73-.43 1.4-1.01 1.83-1.74.43-.73.69-1.46.88-2.26.19-.8.34-1.82.4-3.09.06-1.27.07-1.68.07-3.44s-.01-2.17-.07-3.44c-.06-1.27-.21-2.29-.4-3.09-.19-.8-.46-1.53-.89-2.24-.43-.73-1.01-1.4-1.74-1.83-.73-.43-1.46-.69-2.26-.88-.8-.19-1.82-.34-3.09-.4C14.17.01 13.76 0 12 0zm0 5.8c3.38 0 6.13 2.75 6.13 6.13s-2.75 6.13-6.13 6.13-6.13-2.75-6.13-6.13S8.62 5.8 12 5.8zm0 10.15c2.22 0 4.02-1.8 4.02-4.02s-1.8-4.02-4.02-4.02-4.02 1.8-4.02 4.02 1.8 4.02 4.02 4.02zm6.53-10.33c-.79 0-1.43.64-1.43 1.43s.64 1.43 1.43 1.43 1.43-.64 1.43-1.43-.64-1.43-1.43-1.43z"/>
-                    </svg>
-                </a>
-            </div>
-        </div>
-        
-    <script>
-        // Dynamic Code Background Animation
-        const codeSnippets = [
-            'function animate() { ... }',
-            'div { animation: float 20s linear infinite; }',
-            'const app = new App();',
-            'body { background: #0f0f0f; }',
-            'if (x > 0) { return true; }',
-            '<div class="card-container">',
-            'let x = document.querySelector(".code");',
-            '.social-icon:hover { transform: scale(1.2); }',
-            'console.log("Hello, World!");',
-            'import React from "react";'
-        ];
+    <main class="card" role="main" aria-labelledby="skills-heading">
+      <h2 id="skills-heading" class="section-title">Skills</h2>
+      <div class="chips" role="list" aria-label="รายการทักษะ">
+        <span class="chip" role="listitem">C++</span>
+        <span class="chip" role="listitem">Java</span>
+        <span class="chip" role="listitem">Graphics Design</span>
+        <span class="chip" role="listitem">Web Development</span>
+        <span class="chip" role="listitem">HTML</span>
+        <span class="chip" role="listitem">CSS</span>
+        <span class="chip" role="listitem">JavaScript</span>
+      </div>
 
-        const codeBackground = document.querySelector('.code-background');
-        
-        function createCodeSnippet() {
-            const snippet = document.createElement('div');
-            snippet.className = 'code-snippet';
-            snippet.textContent = codeSnippets[Math.floor(Math.random() * codeSnippets.length)];
-            snippet.style.left = `${Math.random() * 100}vw`;
-            snippet.style.animationDuration = `${15 + Math.random() * 15}s`;
-            snippet.style.animationDelay = `${Math.random() * 5}s`;
-            codeBackground.appendChild(snippet);
+      <h2 class="section-title" style="margin-top:18px;">ช่องทางติดต่อ</h2>
+      <div class="contacts" role="group" aria-label="ช่องทางติดต่อ">
 
-            // Remove snippet after animation
-            snippet.addEventListener('animationend', () => {
-                snippet.remove();
-            });
-        }
+        <!-- Discord -->
+        <button id="discordBtn" class="contact-btn" title="Open Discord">
+          <span class="contact-icon" aria-hidden="true">
+            <!-- Discord SVG (white) -->
+            <svg viewBox="0 0 71 55" fill="white" xmlns="http://www.w3.org/2000/svg"><path d="M60.104 4.552A58.56 58.56 0 0046.8.9a41.3 41.3 0 00-1.98 4.2 53.36 53.36 0 00-15.64 0A41.3 41.3 0 0026.21.9 58.56 58.56 0 0012.9 4.55C6.86 18.2 3.8 31.8 5.7 45.35a58.1 58.1 0 0016.6 5.2c1.22-.86 2.3-1.95 3.24-3.26-5.07-1.52-8.8-4.22-9.9-5.22 0 0 .83.48 2.37 1.2 4.3 2.06 8.74 3.04 13.24 3.2 5.2.17 10.6-1.03 16.05-3.2 1.5-.58 2.33-1.03 2.33-1.03-1.1 1-4.8 3.7-9.9 5.2.93 1.3 2.01 2.4 3.24 3.26a58.09 58.09 0 0016.6-5.2c1.86-13.55-.2-27.15-6.24-40.8zM23.2 37.1c-3.1 0-5.6-2.9-5.6-6.4 0-3.5 2.5-6.4 5.6-6.4 3.15 0 5.68 2.9 5.6 6.4 0 3.5-2.45 6.4-5.6 6.4zm24.6 0c-3.1 0-5.6-2.9-5.6-6.4 0-3.5 2.5-6.4 5.6-6.4 3.15 0 5.68 2.9 5.6 6.4 0 3.5-2.5 6.4-5.6 6.4z"/></svg>
+          </span>
+          <span>Discord</span>
+        </button>
 
-        // Create multiple snippets at intervals
-        setInterval(createCodeSnippet, 1000);
-        // Initial snippets
-        for (let i = 0; i < 10; i++) {
-            createCodeSnippet();
-        }
-    </script>
+        <!-- Instagram -->
+        <a class="contact-btn ghost" id="instagramBtn" href="https://www.instagram.com/sukonlxwat?igsh=MXVkeWJ2aWN6MTBpMA==" target="_blank" rel="noopener noreferrer" title="Instagram">
+          <span class="contact-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="white" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="3" width="18" height="18" rx="5" stroke="white" stroke-width="1.2" fill="none"/><path d="M12 8.5a3.5 3.5 0 100 7 3.5 3.5 0 000-7z" stroke="white" stroke-width="1.2" fill="none"/><circle cx="17.5" cy="6.5" r="0.75" fill="white"/></svg>
+          </span>
+          <span style="opacity:0.9;color:var(--muted);">Instagram</span>
+        </a>
+
+        <!-- Facebook -->
+        <a class="contact-btn ghost" id="facebookBtn" href="https://www.facebook.com/share/1Ay27dQ2JF/" target="_blank" rel="noopener noreferrer" title="Facebook">
+          <span class="contact-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="white" xmlns="http://www.w3.org/2000/svg"><path d="M22 12.07C22 6.56 17.52 2 12 2S2 6.56 2 12.07c0 5 3.66 9.13 8.44 9.88v-6.99H8.9v-2.9h1.54V9.41c0-1.52.9-2.37 2.28-2.37.66 0 1.35.12 1.35.12v1.48h-.76c-.75 0-.98.47-.98.95v1.15h1.66l-.27 2.9h-1.39V22C18.34 21.2 22 17.07 22 12.07z"/></svg>
+          </span>
+          <span style="opacity:0.9;color:var(--muted);">Facebook</span>
+        </a>
+
+      </div>
+
+      <div class="note">มีแค่ช่องทางด้านบน — เปลี่ยนลิงก์/แท็กในสคริปต์เป็นของจริงได้ทันที</div>
+
+      <div id="toast" style="display:none;margin-top:12px;padding:10px;background:linear-gradient(90deg,var(--accent-1),var(--accent-2));color:white;border-radius:10px;font-weight:700;box-shadow:0 12px 30px rgba(177,15,15,0.14);">คัดลอกแล้ว ✅</div>
+
+      <div class="tab-hint" aria-hidden="true">
+        <div class="tab-dot"></div>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    // ตั้งค่า invite / tag ที่ต้องการ
+    const discordInvite = 'https://discord.gg/F7GfKQQKW4'; // <-- เปลี่ยนเป็น invite จริง
+    const discordTag = 'suk0n_'; // <-- เปลี่ยนเป็น discord tag จริง
+
+    // เปิด invite เมื่อกดปุ่ม Discord
+    document.getElementById('discordBtn').addEventListener('click', () => {
+      window.open(discordInvite, '_blank', 'noopener');
+    });
+
+    // ถ้าต้องการคัดลอก tag เมื่อกดคัดลอก (ตอนนี้ไม่แสดงปุ่มแยก แต่ถ้าต้องการให้กดคัดลอกเมื่อกด Discord ยาวๆ)
+    // ตัวอย่าง: กดค้าง (long press) เพื่อคัดลอก — ไม่ค่อย reliable บนเว็บ แต่ให้ตัวอย่างไว้
+    let pressTimer;
+    const discordBtn = document.getElementById('discordBtn');
+    discordBtn.addEventListener('mousedown', () => {
+      pressTimer = window.setTimeout(() => {
+        navigator.clipboard?.writeText(discordTag).then(() => {
+          const t = document.getElementById('toast');
+          t.style.display = 'block';
+          setTimeout(() => t.style.display = 'none', 1600);
+        }).catch(() => {
+          alert('ไม่สามารถคัดลอกอัตโนมัติ — โปรดคัดลอก: ' + discordTag);
+        });
+      }, 700);
+    });
+    ['mouseup','mouseleave'].forEach(ev => {
+      discordBtn.addEventListener(ev, () => clearTimeout(pressTimer));
+    });
+
+    // ป้องกันปุ่มลิงก์จากการเปิดในแท็บเดียวกันโดยไม่ได้ตั้งใจ (ghost buttons are links so they already open in new tab)
+    // Social links already have target="_blank"
+  </script>
 </body>
 </html>
